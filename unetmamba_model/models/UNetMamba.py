@@ -15,7 +15,6 @@ from einops import rearrange, repeat
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from unetmamba_model.models.ResT import ResT
 
-os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 def rest_lite(pretrained=True, weight_path='pretrain_weights/rest_lite.pth',  **kwargs):
     model = ResT(embed_dims=[64, 128, 256, 512], num_heads=[1, 2, 4, 8], mlp_ratios=[4, 4, 4, 4], qkv_bias=True,
@@ -27,45 +26,6 @@ def rest_lite(pretrained=True, weight_path='pretrain_weights/rest_lite.pth',  **
         model_dict.update(old_dict)
         model.load_state_dict(model_dict)
     return model
-
-
-class ConvBN(nn.Sequential):
-    def __init__(self, in_channels, out_channels, kernel_size=3, dilation=1, stride=1, norm_layer=nn.BatchNorm2d, bias=False):
-        super(ConvBN, self).__init__(
-            nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, bias=bias,
-                      dilation=dilation, stride=stride, padding=((stride - 1) + dilation * (kernel_size - 1)) // 2),
-            norm_layer(out_channels)
-        )
-
-
-class ConvBNReLU(nn.Sequential):
-    def __init__(self, in_channels, out_channels, kernel_size=3, dilation=1, stride=1, norm_layer=nn.BatchNorm2d, bias=False):
-        super(ConvBNReLU, self).__init__(
-            nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, bias=bias,
-                      dilation=dilation, stride=stride, padding=((stride - 1) + dilation * (kernel_size - 1)) // 2),
-            norm_layer(out_channels),
-            nn.ReLU6()
-        )
-
-
-class SeparableConvBN(nn.Sequential):
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, dilation=1,
-                 norm_layer=nn.BatchNorm2d):
-        super(SeparableConvBN, self).__init__(
-            nn.Conv2d(in_channels, in_channels, kernel_size, stride=stride, dilation=dilation,
-                      padding=((stride - 1) + dilation * (kernel_size - 1)) // 2,
-                      groups=in_channels, bias=False),
-            nn.Conv2d(in_channels, out_channels, kernel_size=1, bias=False),
-            norm_layer(out_channels),
-        )
-
-
-class Conv(nn.Sequential):
-    def __init__(self, in_channels, out_channels, kernel_size=3, dilation=1, stride=1, bias=False):
-        super(Conv, self).__init__(
-            nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, bias=bias,
-                      dilation=dilation, stride=stride, padding=((stride - 1) + dilation * (kernel_size - 1)) // 2)
-        )
 
 
 class PatchExpand(nn.Module):
@@ -192,58 +152,23 @@ class VSSLayer(nn.Module):
 
 
 class LocalSupervision(nn.Module):
-
-    def __init__(self, in_channels=64, num_classes=6):
+    def __init__(self, in_channels=128, num_classes=6):
         super().__init__()
-        self.conv = ConvBNReLU(in_channels, in_channels)
+        self.conv3 = nn.Sequential(nn.Conv2d(in_channels, in_channels, kernel_size=3, dilation=1, stride=1, padding=1, bias=False),
+                                   nn.BatchNorm2d(in_channels),
+                                   nn.ReLU6())
+        self.conv1 = nn.Sequential(nn.Conv2d(in_channels, in_channels, kernel_size=1, dilation=1, stride=1, padding=0, bias=False),
+                                   nn.BatchNorm2d(in_channels),
+                                   nn.ReLU6())
         self.drop = nn.Dropout(0.1)
-        self.conv_out = Conv(in_channels, num_classes, kernel_size=1)
+        self.conv_out = nn.Conv2d(in_channels, num_classes, kernel_size=1, dilation=1, stride=1, padding=0, bias=False)
 
     def forward(self, x, h, w):
-        feat = self.conv(x)
-        feat = self.drop(feat)
-        feat = self.conv_out(feat)
-        feat = F.interpolate(feat, size=(h, w), mode='bilinear', align_corners=False)
-        return feat
-
-
-class FeatureRefinementModule(nn.Module):
-    def __init__(self, in_channels=64, decode_channels=64):
-        super().__init__()
-        self.pre_conv = ConvBN(in_channels, decode_channels, kernel_size=3)
-
-        self.weights = nn.Parameter(torch.ones(2, dtype=torch.float32), requires_grad=True)
-        self.eps = 1e-8
-        self.post_conv = ConvBNReLU(decode_channels, decode_channels, kernel_size=3)
-
-        self.pa = nn.Sequential(nn.Conv2d(decode_channels, decode_channels, kernel_size=3, padding=1, groups=decode_channels),
-                                nn.Sigmoid())
-        self.ca = nn.Sequential(nn.AdaptiveAvgPool2d(1),
-                                Conv(decode_channels, decode_channels//16, kernel_size=1),
-                                nn.ReLU6(),
-                                Conv(decode_channels//16, decode_channels, kernel_size=1),
-                                nn.Sigmoid())
-
-        self.shortcut = ConvBN(decode_channels, decode_channels, kernel_size=1)
-        self.proj = SeparableConvBN(decode_channels, decode_channels, kernel_size=3)
-        self.act = nn.ReLU6()
-
-    def forward(self, x, res):
-        x = F.interpolate(x, scale_factor=0.25, mode='bilinear', align_corners=False)
-        # res = F.interpolate(res, scale_factor=4, mode='bilinear', align_corners=False)
-        weights = nn.ReLU()(self.weights)
-        fuse_weights = weights / (torch.sum(weights, dim=0) + self.eps)
-        # print(self.pre_conv(res).shape, x.shape)
-        # x = fuse_weights[0] * self.pre_conv(res) + fuse_weights[1] * self.pre_conv(x)
-        x = fuse_weights[0] * self.pre_conv(res) + fuse_weights[1] * x
-        x = self.post_conv(x)
-        shortcut = self.shortcut(x)
-        pa = self.pa(x) * x
-        ca = self.ca(x) * x
-        x = pa + ca
-        x = self.proj(x) + shortcut
-        x = self.act(x)
-
+        local1 = self.conv3(x)
+        local2 = self.conv1(x)
+        x = self.drop(local1 + local2)
+        x = self.conv_out(x)
+        x = F.interpolate(x, size=(h, w), mode='bilinear', align_corners=False)
         return x
 
 
@@ -305,7 +230,7 @@ class MambaSegDecoder(nn.Module):
         self.concat_back_dim = nn.ModuleList(concat_back_dim)
         if self.training:
             self.lsm = nn.ModuleList(lsm_layers)
-        self.seg = nn.Conv2d(encoder_channels[-4], num_classes, 1, 1, 0, bias=True)
+        self.seg = nn.Conv2d(encoder_channels[-4], num_classes, kernel_size=1, stride=1, padding=0, bias=True)
 
         self.init_weight()
 
