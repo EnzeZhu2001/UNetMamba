@@ -54,7 +54,7 @@ Prepare the following folders to organize this repo:
 
 ## Pretrained Weights of UNetMamba
 
-[model_weights](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
+[model_weights](https://pan.baidu.com/s/1wVVI1MPY_fnVSYg_5bLIlQ?pwd=mdwe) 
 
 ## Data Preprocessing
 
