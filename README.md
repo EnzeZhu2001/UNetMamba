@@ -48,19 +48,19 @@ Prepare the following folders to organize this repo:
 ## Install
 
 
-## Pretrained Weights of Backbones (pretrain_weights)
+## Pretrained Weights of Backbones
 
-[Baidu Netdisk](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
+[pretrain_weights](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
 
-## Pretrained Weights of UNetMamba (model_weights)
+## Pretrained Weights of UNetMamba
 
-[Baidu Netdisk](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
+[model_weights](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
 
 ## Data Preprocessing
 
 Download the datasets from the official website and split them as follows.
 
-**LoveDA** ([official](https://github.com/Junjue-Wang/LoveDA))
+**LoveDA** ([LoveDA official](https://github.com/Junjue-Wang/LoveDA))
 ```
 python tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Rural/masks_png --output-mask-dir data/LoveDA/Train/Rural/masks_png_convert
 python tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Urban/masks_png --output-mask-dir data/LoveDA/Train/Urban/masks_png_convert
@@ -72,7 +72,7 @@ python tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Rural/masks
 python tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Urban/masks_png --output-mask-dir data/LoveDA/train_val/Urban/masks_png_convert
 ```
 
-**Vaihingen** ([official](https://www.isprs.org/education/benchmarks/UrbanSemLab/Default.aspx))
+**Vaihingen** ([Vaihingen official](https://www.isprs.org/education/benchmarks/UrbanSemLab/Default.aspx))
 
 Generate the train set.
 ```
