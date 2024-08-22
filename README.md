@@ -1,13 +1,13 @@
 # UNetMamba
 ## Introduction
 
-**UNetMamba** is the official code of 
-
+**UNetMamba** is the official code of [UNetMamba: Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545) on PyTorch.
 
 ## Folder Structure
 
 Prepare the following folders to organize this repo:
 ```none
+UNetMamba-main
 ├── UNetMamba
 |   ├──config 
 |   ├──tools
@@ -46,7 +46,11 @@ Prepare the following folders to organize this repo:
 ```
 
 ## Install
-
+```
+conda create -n UNetMamba-main python=3.8
+conda activate UNetMamba-main
+pip install -r UNetMamba/requirements.txt
+```
 
 ## Pretrained Weights of Backbones
 
@@ -62,35 +66,35 @@ Download the datasets from the official website and split them as follows.
 
 **LoveDA** ([LoveDA official](https://github.com/Junjue-Wang/LoveDA))
 ```
-python tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Rural/masks_png --output-mask-dir data/LoveDA/Train/Rural/masks_png_convert
-python tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Urban/masks_png --output-mask-dir data/LoveDA/Train/Urban/masks_png_convert
+python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Rural/masks_png --output-mask-dir data/LoveDA/Train/Rural/masks_png_convert
+python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Urban/masks_png --output-mask-dir data/LoveDA/Train/Urban/masks_png_convert
 
-python tools/loveda_mask_convert.py --mask-dir data/LoveDA/Val/Rural/masks_png --output-mask-dir data/LoveDA/Val/Rural/masks_png_convert
-python tools/loveda_mask_convert.py --mask-dir data/LoveDA/Val/Urban/masks_png --output-mask-dir data/LoveDA/Val/Urban/masks_png_convert
+python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/Val/Rural/masks_png --output-mask-dir data/LoveDA/Val/Rural/masks_png_convert
+python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/Val/Urban/masks_png --output-mask-dir data/LoveDA/Val/Urban/masks_png_convert
 
-python tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Rural/masks_png --output-mask-dir data/LoveDA/train_val/Rural/masks_png_convert
-python tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Urban/masks_png --output-mask-dir data/LoveDA/train_val/Urban/masks_png_convert
+python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Rural/masks_png --output-mask-dir data/LoveDA/train_val/Rural/masks_png_convert
+python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Urban/masks_png --output-mask-dir data/LoveDA/train_val/Urban/masks_png_convert
 ```
 
 **Vaihingen** ([Vaihingen official](https://www.isprs.org/education/benchmarks/UrbanSemLab/Default.aspx))
 
 Generate the train set.
 ```
-python tools/vaihingen_patch_split.py 
+python UNetMamba/tools/vaihingen_patch_split.py 
 --img-dir "data/vaihingen/train_images" --mask-dir "data/vaihingen/train_masks" 
 --output-img-dir "data/vaihingen/train_1024/images" --output-mask-dir "data/vaihingen/train_1024/masks" 
 --mode "train" --split-size 1024 --stride 512
 ```
 Generate the test set. (Tip: the eroded one.)
 ```
-python tools/vaihingen_patch_split.py 
+python UNetMamba/tools/vaihingen_patch_split.py 
 --img-dir "data/vaihingen/test_images" --mask-dir "data/vaihingen/test_masks_eroded" 
 --output-img-dir "data/vaihingen/test_1024/images" --output-mask-dir "data/vaihingen/test_1024/masks"
 --mode "val" --split-size 1024 --stride 1024 --eroded
 ```
 Generate the masks_1024_rgb (RGB format ground truth labels) for visualization.
 ```
-python tools/vaihingen_patch_split.py 
+python UNetMamba/tools/vaihingen_patch_split.py 
 --img-dir "data/vaihingen/test_images" --mask-dir "data/vaihingen/test_masks" 
 --output-img-dir "data/vaihingen/test_1024/images" --output-mask-dir "data/vaihingen/test_1024/masks_rgb" 
 --mode "val" --split-size 1024 --stride 1024 --gt
@@ -102,8 +106,8 @@ As for the validation set, you can select some images from the training set to b
 "-c" means the path of the config, use different **config** to train different models in different datasets.
 
 ```
-python train.py -c config/loveda/unetmamba.py
-python train.py -c config/vaihingen/unetmamba.py
+python UNetMamba/train.py -c UNetMamba/config/loveda/unetmamba.py
+python UNetMamba/train.py -c UNetMamba/config/vaihingen/unetmamba.py
 ```
 
 ## Testing
@@ -119,22 +123,22 @@ python train.py -c config/vaihingen/unetmamba.py
 
 **LoveDA** ([Online Testing](https://codalab.lisn.upsaclay.fr/competitions/421))
 ```
-python loveda_test.py -c config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_test
-python loveda_test.py -c config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_test -t 'd4'
-python loveda_test.py -c config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_rgb -t 'd4' --rgb --val
+python UNetMamba/loveda_test.py -c UNetMamba/config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_test
+python UNetMamba/loveda_test.py -c UNetMamba/config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_test -t 'd4'
+python UNetMamba/loveda_test.py -c UNetMamba/config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_rgb -t 'd4' --rgb --val
 ```
 
 **Vaihingen**
 ```
-python vaihingen_test.py -c config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_test
-python vaihingen_test.py -c config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_test -t 'lr'
-python vaihingen_test.py -c config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_rgb --rgb
+python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_test
+python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_test -t 'lr'
+python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_rgb --rgb
 ```
 
 ## Citation
 
 If you find this project useful in your research, please consider citing：
-
+[UNetMamba: Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545).
 
 ## Acknowledgement
 
