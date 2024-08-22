@@ -55,7 +55,7 @@ def val_aug(img, mask):
 
 
 class UAVIDDataset(Dataset):
-    def __init__(self, data_root='autodl-tmp/data/uavid/val_'+str(IMG_SIZE), mode='val', img_dir='images', mask_dir='masks',
+    def __init__(self, data_root='data/uavid/val_'+str(IMG_SIZE), mode='val', img_dir='images', mask_dir='masks',
                  img_suffix='.png', mask_suffix='.png', transform=val_aug, mosaic_ratio=0.0,
                  img_size=ORIGIN_IMG_SIZE):
         self.data_root = data_root
@@ -166,7 +166,7 @@ class UAVIDDataset(Dataset):
 
 
 class UAVIDDatasetV2(Dataset):
-    def __init__(self, data_root='autodl-tmp/data/uavid/val_'+str(IMG_SIZE), mode='val', img_dir='images', mask_dir='masks',
+    def __init__(self, data_root='data/uavid/val_'+str(IMG_SIZE), mode='val', img_dir='images', mask_dir='masks',
                  img_suffix='.png', mask_suffix='.png', transform=val_aug, mosaic_ratio=0.0,
                  img_size=ORIGIN_IMG_SIZE, num_classes=len(CLASSES), class_interest=[4, 5, 6], class_ratio=[0.1, 0.1, 0.01]):
         self.data_root = data_root
