@@ -39,10 +39,10 @@ num_classes = 6
 # split huge RS image to small patches
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--img-dir", default="autodl-tmp/data/vaihingen/train_images")
-    parser.add_argument("--mask-dir", default="autodl-tmp/data/vaihingen/train_masks")
-    parser.add_argument("--output-img-dir", default="autodl-tmp/data/vaihingen/train_1024/images")
-    parser.add_argument("--output-mask-dir", default="autodl-tmp/data/vaihingen/train_1024/masks")
+    parser.add_argument("--img-dir", default="data/vaihingen/train_images")
+    parser.add_argument("--mask-dir", default="data/vaihingen/train_masks")
+    parser.add_argument("--output-img-dir", default="data/vaihingen/train_1024/images")
+    parser.add_argument("--output-mask-dir", default="data/vaihingen/train_1024/masks")
     parser.add_argument("--eroded", action='store_true')
     parser.add_argument("--gt", action='store_true')
     parser.add_argument("--mode", type=str, default='train')
@@ -109,35 +109,15 @@ def image_augment(image, mask, patch_size, mode='train', val_scale=1.0):
 
     assert image_height == mask_height and image_width == mask_width
     if mode == 'train':
-        # resize_0 = Resize(size=(int(image_width * 0.25), int(image_height * 0.25)))
-        # resize_1 = Resize(size=(int(image_width * 0.5), int(image_height * 0.5)))
-        # resize_2 = Resize(size=(int(image_width * 0.75), int(image_height * 0.75)))
-        # resize_3 = Resize(size=(int(image_width * 1.25), int(image_height * 1.25)))
-        # resize_4 = Resize(size=(int(image_width * 1.5), int(image_height * 1.5)))
-        # resize_5 = Resize(size=(int(image_width * 1.75), int(image_height * 1.75)))
-        # resize_6 = Resize(size=(int(image_width * 2.0), int(image_height * 2.0)))
-        # image_resize_0, mask_resize_0 = resize_0(image.copy()), resize_0(mask.copy())
-        # image_resize_1, mask_resize_1 = resize_1(image.copy()), resize_1(mask.copy())
-        # image_resize_2, mask_resize_2 = resize_2(image.copy()), resize_2(mask.copy())
-        # image_resize_3, mask_resize_3 = resize_3(image.copy()), resize_3(mask.copy())
-        # image_resize_4, mask_resize_4 = resize_4(image.copy()), resize_4(mask.copy())
-        # image_resize_5, mask_resize_5 = resize_5(image.copy()), resize_5(mask.copy())
-        # image_resize_6, mask_resize_6 = resize_6(image.copy()), resize_6(mask.copy())
         h_vlip = RandomHorizontalFlip(p=1.0)
         v_vlip = RandomVerticalFlip(p=1.0)
-        # crop_1 = RandomCrop(size=(int(image_width*0.75), int(image_height*0.75)))
-        # crop_2 = RandomCrop(size=(int(image_width * 0.5), int(image_height * 0.5)))
-        # color = torchvision.transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2)
+      
         image_h_vlip, mask_h_vlip = h_vlip(image.copy()), h_vlip(mask.copy())
         image_v_vlip, mask_v_vlip = v_vlip(image.copy()), v_vlip(mask.copy())
-        # image_crop_1, mask_crop_1 = crop_1(image.copy()), crop_1(mask.copy())
-        # image_crop_2, mask_crop_2 = crop_2(image.copy()), crop_2(mask.copy())
-        # image_color = color(image.copy())
 
         image_list_train = [image, image_h_vlip, image_v_vlip]
         mask_list_train = [mask, mask_h_vlip, mask_v_vlip]
-        # image_list_train = [image]
-        # mask_list_train = [mask]
+
         for i in range(len(image_list_train)):
             image_tmp, mask_tmp = get_img_mask_padded(image_list_train[i], mask_list_train[i], patch_size, mode)
             mask_tmp = rgb_to_2D_label(mask_tmp.copy())
@@ -189,9 +169,7 @@ def vaihingen_format(inp):
         mask_ = car_color_replace(mask)
         out_origin_mask_path = os.path.join(masks_output_dir + '/origin/', "{}.tif".format(mask_filename))
         cv2.imwrite(out_origin_mask_path, mask_)
-    # print(img_path)
-    # print(img.size, mask.size)
-    # img and mask shape: WxHxC
+
     image_list, mask_list = image_augment(image=img.copy(), mask=mask.copy(), patch_size=split_size,
                                           mode=mode, val_scale=val_scale)
     assert img_filename == mask_filename and len(image_list) == len(mask_list)
