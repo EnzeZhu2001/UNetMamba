@@ -179,12 +179,12 @@ class LoveDATrainDataset(Dataset):
         return img, mask
 
 
-loveda_val_dataset = LoveDATrainDataset(data_root='autodl-tmp/data/LoveDA/Val', mosaic_ratio=0.0,
+loveda_val_dataset = LoveDATrainDataset(data_root='data/LoveDA/Val', mosaic_ratio=0.0,
                                         transform=val_aug)
 
 
 class LoveDATestDataset(Dataset):
-    def __init__(self, data_root='autodl-tmp/data/LoveDA/Test', img_dir='images_png',
+    def __init__(self, data_root='data/LoveDA/Test', img_dir='images_png',
                  img_suffix='.png',  mosaic_ratio=0.0,
                  img_size=ORIGIN_IMG_SIZE):
         self.data_root = data_root
