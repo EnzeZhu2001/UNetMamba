@@ -51,6 +51,8 @@ conda create -n UNetMamba-main python=3.8
 conda activate UNetMamba-main
 pip install -r UNetMamba/requirements.txt
 ```
+Tips: If you're having difficulty in installing "causal_conv1d" or "mamba_ssm", please refer to [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) or [mamba_ssm](https://github.com/state-spaces/mamba/releases) to download the wheel files and then pip install them. 
+For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl" and "mamba_ssm-1.1.1+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl".
 
 ## Pretrained Weights of Backbones
 
