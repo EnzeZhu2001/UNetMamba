@@ -51,8 +51,8 @@ conda create -n UNetMamba-main python=3.8
 conda activate UNetMamba-main
 pip install -r UNetMamba/requirements.txt
 ```
-Tips: If you're having difficulty in installing "causal_conv1d" or "mamba_ssm", please refer to [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) or [mamba_ssm](https://github.com/state-spaces/mamba/releases) to download the wheel files and then pip install them. 
-For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl" and "mamba_ssm-1.1.1+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl".
+💁Tips: If you're having difficulty in installing "causal_conv1d" or "mamba_ssm", please refer to [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) or [mamba_ssm](https://github.com/state-spaces/mamba/releases) to download the wheel files and then pip install them. 
+For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl" and "mamba_ssm-1.1.1+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl". Moreover, UNetMamba is also compatible with the newest version of "causal_conv1d" and "mamba_ssm", please feel free to try😁.
 
 ## Pretrained Weights of Backbones
 
@@ -153,6 +153,9 @@ If you find this project useful in your research, please consider citing：
 
 - [GeoSeg](https://github.com/WangLibo1995/GeoSeg)
 - [SSRS](https://github.com/sstary/SSRS)
+- [mamba](https://github.com/state-spaces/mamba)
 - [VMamba](https://github.com/MzeroMiko/VMamba)
-- [Swin-UMamba](https://github.com/JiarunLiu/Swin-UMamba)
+- [causal-conv1d](https://github.com/Dao-AILab/causal-conv1d)
 - [LoveDA](https://github.com/Junjue-Wang/LoveDA)
+- [Swin-UMamba](https://github.com/JiarunLiu/Swin-UMamba)
+- [CM-UNet](https://github.com/XiaoBuL/CM-UNet)
