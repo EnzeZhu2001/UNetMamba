@@ -66,7 +66,7 @@ For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx
 
 Download the datasets from the official website and split them as follows.
 
-**LoveDA** ([LoveDA official](https://github.com/Junjue-Wang/LoveDA))
+**1️⃣LoveDA** ([LoveDA official](https://github.com/Junjue-Wang/LoveDA))
 ```
 python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Rural/masks_png --output-mask-dir data/LoveDA/Train/Rural/masks_png_convert
 python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/Train/Urban/masks_png --output-mask-dir data/LoveDA/Train/Urban/masks_png_convert
@@ -78,7 +78,7 @@ python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/R
 python UNetMamba/tools/loveda_mask_convert.py --mask-dir data/LoveDA/train_val/Urban/masks_png --output-mask-dir data/LoveDA/train_val/Urban/masks_png_convert
 ```
 
-**Vaihingen** ([Vaihingen official](https://www.isprs.org/education/benchmarks/UrbanSemLab/Default.aspx))
+**2️⃣Vaihingen** ([Vaihingen official](https://www.isprs.org/education/benchmarks/UrbanSemLab/Default.aspx))
 
 Generate the train set.
 ```
@@ -118,14 +118,14 @@ python UNetMamba/train.py -c UNetMamba/config/vaihingen/unetmamba.py
 "-t" denotes the test time augmentation (TTA), can be [None, 'lr', 'd4'], default is None, 'lr' is flip TTA, 'd4' is multiscale TTA
 "--rgb" denotes whether to output masks in RGB format
 
-**LoveDA** ([Online Testing](https://codalab.lisn.upsaclay.fr/competitions/421))
+**1️⃣LoveDA** ([Online Testing](https://codalab.lisn.upsaclay.fr/competitions/421))
 ```
 python UNetMamba/loveda_test.py -c UNetMamba/config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_test
 python UNetMamba/loveda_test.py -c UNetMamba/config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_test -t 'd4'
 python UNetMamba/loveda_test.py -c UNetMamba/config/loveda/unetmamba.py -o fig_results/loveda/unetmamba_rgb -t 'd4' --rgb --val
 ```
 
-**Vaihingen**
+**2️⃣Vaihingen**
 ```
 python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_test
 python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_test -t 'lr'
