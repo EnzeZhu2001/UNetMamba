@@ -34,12 +34,12 @@ UNetMamba-main
 │   │   ├── Val (the same with Train)
 │   │   ├── Test
 │   │   ├── train_val (merge Train and Val)
-│   ├── vaihingen
-│   │   ├── train_images (original)
-│   │   ├── train_masks (original)
-│   │   ├── test_images (original_ID:: 1, 5, 11, 15, 21, 26, 30, 33, 38)
-│   │   ├── test_masks (original_ID:: 1, 5, 11, 15, 21, 26, 30, 33, 38)
-│   │   ├── test_masks_eroded (original_ID:: 1, 5, 11, 15, 21, 26, 30, 33, 38)
+│   ├── vaihingen (a total of 33 original images)
+│   │   ├── train_images (24 original images, randomly selected)
+│   │   ├── train_masks (24 original rgb masks)
+│   │   ├── test_images (remaining 9 original images)
+│   │   ├── test_masks (remaining 9 original rgb masks)
+│   │   ├── test_masks_eroded (remaining 9 eroded rgb masks, xxxx_noBoundary.tif)
 │   │   ├── train_1024 (train set at 1024*1024)
 │   │   ├── test_1024 (test set at 1024*1024)
 │   │   ├── ...
