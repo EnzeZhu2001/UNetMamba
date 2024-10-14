@@ -1,9 +1,9 @@
 # UNetMamba
-## Introduction
+## 👀Introduction
 
-**UNetMamba** is the official code of [UNetMamba: Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545) on PyTorch. (IEEE GRSL undergoing review)
+**UNetMamba** is the official PyTorch implementation of paper [UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545). (IEEE GRSL undergoing review)
 
-## Folder Structure
+## 📂Folder Structure
 
 Prepare the following folders to organize this repo:
 ```none
@@ -45,7 +45,7 @@ UNetMamba-main
 │   │   ├── ...
 ```
 
-## Install
+## 🛠Install
 ```
 conda create -n UNetMamba-main python=3.8
 conda activate UNetMamba-main
@@ -54,15 +54,15 @@ pip install -r UNetMamba/requirements.txt
 💁Tips: If you're having difficulty in installing "causal_conv1d" or "mamba_ssm", please refer to [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) or [mamba_ssm](https://github.com/state-spaces/mamba/releases) to download the wheel files and then pip install them. 
 For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl" and "mamba_ssm-1.1.1+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl". Moreover, UNetMamba is also compatible with the newest version of "causal_conv1d" and "mamba_ssm", please feel free to try😁.
 
-## Pretrained Weights of Backbones
+## 🧩Pretrained Weights of Backbones
 
 [pretrain_weights](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
 
-## Pretrained Weights of UNetMamba
+## 🧩Pretrained Weights of UNetMamba
 
 [model_weights](https://pan.baidu.com/s/1wVVI1MPY_fnVSYg_5bLIlQ?pwd=mdwe) 
 
-## Data Preprocessing
+## 💿Data Preprocessing
 
 Download the datasets from the official website and split them as follows.
 
@@ -85,7 +85,7 @@ Generate the train set.
 python UNetMamba/tools/vaihingen_patch_split.py 
 --img-dir "data/vaihingen/train_images" --mask-dir "data/vaihingen/train_masks" 
 --output-img-dir "data/vaihingen/train_1024/images" --output-mask-dir "data/vaihingen/train_1024/masks" 
---mode "train" --split-size 1024 --stride 512
+--mode "train" --split-size 1024 --stride 1024
 ```
 Generate the test set. (Tip: the eroded one.)
 ```
@@ -102,7 +102,7 @@ python UNetMamba/tools/vaihingen_patch_split.py
 --mode "val" --split-size 1024 --stride 1024 --gt
 ```
 
-## Training
+## 🏋Training
 
 "-c" means the path of the config, use different **config** to train different models in different datasets.
 
@@ -111,16 +111,12 @@ python UNetMamba/train.py -c UNetMamba/config/loveda/unetmamba.py
 python UNetMamba/train.py -c UNetMamba/config/vaihingen/unetmamba.py
 ```
 
-## Testing
+## 🎯Testing
 
 "-c" denotes the path of the config, Use different **config** to test different models in different datasets. 
-
 "-o" denotes the output path 
-
 "-t" denotes the test time augmentation (TTA), can be [None, 'lr', 'd4'], default is None, 'lr' is flip TTA, 'd4' is multiscale TTA
-
 "--rgb" denotes whether to output masks in RGB format
-
 
 **LoveDA** ([Online Testing](https://codalab.lisn.upsaclay.fr/competitions/421))
 ```
@@ -136,10 +132,10 @@ python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o
 python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o fig_results/vaihingen/unetmamba_rgb --rgb
 ```
 
-## Citation
+## 🍀Citation
 
 If you find this project useful in your research, please consider citing：
-[UNetMamba: Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545).
+[UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545).
 ```
 @article{zhu2024unetmamba,
   title={UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images},
@@ -149,7 +145,7 @@ If you find this project useful in your research, please consider citing：
 }
 ```
 
-## Acknowledgement
+## ❤Acknowledgement
 
 - [GeoSeg](https://github.com/WangLibo1995/GeoSeg)
 - [SSRS](https://github.com/sstary/SSRS)
