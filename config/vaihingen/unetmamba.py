@@ -127,7 +127,9 @@ def val_aug(img, mask):
 train_dataset = VaihingenDataset(data_root='data/vaihingen/train_'+str(image_size), mode='train',
                                  mosaic_ratio=0.25, transform=train_aug)
 
-val_dataset = VaihingenDataset(transform=val_aug)
+val_dataset = VaihingenDataset(data_root='data/vaihingen/val_'+str(image_size),
+                               transform=val_aug)
+
 test_dataset = VaihingenDataset(data_root='data/vaihingen/test_'+str(image_size),
                                 transform=val_aug)
 
