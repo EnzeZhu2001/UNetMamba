@@ -35,13 +35,17 @@ UNetMamba-main
 │   │   ├── Test
 │   │   ├── train_val (merge Train and Val)
 │   ├── vaihingen (a total of 33 original images)
-│   │   ├── train_images (24 original images, randomly selected)
-│   │   ├── train_masks (24 original rgb masks)
-│   │   ├── test_images (remaining 9 original images)
-│   │   ├── test_masks (remaining 9 original rgb masks)
-│   │   ├── test_masks_eroded (remaining 9 eroded rgb masks, xxxx_noBoundary.tif)
+│   │   ├── test_images (9 original images, randomly selected)
+│   │   ├── test_masks (9 original rgb masks)
+│   │   ├── test_masks_eroded (9 eroded rgb masks, xxxx_noBoundary.tif)
+│   │   ├── train_images (22 original images, randomly selected in remaining images)
+│   │   ├── train_masks (22 original rgb masks)
+│   │   ├── val_images (remaining 2 original images)
+│   │   ├── val_masks (remaining 2 original rgb masks)
+│   │   ├── val_masks_eroded (remaining 2 eroded rgb masks, xxxx_noBoundary.tif)
 │   │   ├── train_1024 (train set at 1024*1024)
 │   │   ├── test_1024 (test set at 1024*1024)
+│   │   ├── val_1024 (validation set at 1024*1024)
 │   │   ├── ...
 ```
 
@@ -87,6 +91,13 @@ python UNetMamba/tools/vaihingen_patch_split.py
 --output-img-dir "data/vaihingen/train_1024/images" --output-mask-dir "data/vaihingen/train_1024/masks" 
 --mode "train" --split-size 1024 --stride 1024
 ```
+Generate the validation set. (Tip: the eroded one.)
+```
+python UNetMamba/tools/vaihingen_patch_split.py 
+--img-dir "data/vaihingen/val_images" --mask-dir "data/vaihingen/val_masks_eroded" 
+--output-img-dir "data/vaihingen/val_1024/images" --output-mask-dir "data/vaihingen/val_1024/masks"
+--mode "val" --split-size 1024 --stride 1024 --eroded
+```
 Generate the test set. (Tip: the eroded one.)
 ```
 python UNetMamba/tools/vaihingen_patch_split.py 
@@ -96,6 +107,11 @@ python UNetMamba/tools/vaihingen_patch_split.py
 ```
 Generate the masks_1024_rgb (RGB format ground truth labels) for visualization.
 ```
+python UNetMamba/tools/vaihingen_patch_split.py 
+--img-dir "data/vaihingen/val_images" --mask-dir "data/vaihingen/val_masks" 
+--output-img-dir "data/vaihingen/val_1024/images" --output-mask-dir "data/vaihingen/val_1024/masks_rgb" 
+--mode "val" --split-size 1024 --stride 1024 --gt
+
 python UNetMamba/tools/vaihingen_patch_split.py 
 --img-dir "data/vaihingen/test_images" --mask-dir "data/vaihingen/test_masks" 
 --output-img-dir "data/vaihingen/test_1024/images" --output-mask-dir "data/vaihingen/test_1024/masks_rgb" 
@@ -113,9 +129,12 @@ python UNetMamba/train.py -c UNetMamba/config/vaihingen/unetmamba.py
 
 ## 🎯Testing
 
-"-c" denotes the path of the config, Use different **config** to test different models in different datasets. 
+"-c" denotes the path of the config, Use different **config** to test different models in different datasets
+
 "-o" denotes the output path 
+
 "-t" denotes the test time augmentation (TTA), can be [None, 'lr', 'd4'], default is None, 'lr' is flip TTA, 'd4' is multiscale TTA
+
 "--rgb" denotes whether to output masks in RGB format
 
 **1️⃣LoveDA** ([Online Testing](https://codalab.lisn.upsaclay.fr/competitions/421))
