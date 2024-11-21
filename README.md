@@ -1,7 +1,7 @@
 # UNetMamba
 ## 👀Introduction
 
-**UNetMamba** is the official PyTorch implementation of paper [UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545). (IEEE GRSL undergoing review)
+**UNetMamba** is the official PyTorch implementation of paper [UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545). [🎉Accepted by IEEE GRSL on 20-11-2024]
 
 ## 📂Folder Structure
 
