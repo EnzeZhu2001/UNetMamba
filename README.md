@@ -155,24 +155,15 @@ python UNetMamba/vaihingen_test.py -c UNetMamba/config/vaihingen/unetmamba.py -o
 
 ## 🍀Citation
 
-If you find this project useful in your research, please consider citing：
+If you find this repo useful in your research, please citing：
 ```
-@article{zhu2024unetmamba,
-  title={UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images},
-  author={Zhu, Enze and Chen, Zhan and Wang, Dingkai and Shi, Hanru and Liu, Xiaoxuan and Wang, Lei},
-  journal={arXiv preprint arXiv:2408.11545},
-  year={2024}
-}
-```
-```
-@article{zhu2024unetmamba,
+@article{zhu2025unetmamba,
   title={UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images},
   author={Zhu, Enze and Chen, Zhan and Wang, Dingkai and Shi, Hanru and Liu, Xiaoxuan and Wang, Lei},
   journal={IEEE Geoscience and Remote Sensing Letters}, 
   year={2025},
   volume={22},
-  number={},
-  pages={1-5},
+  number={6001205},
   doi={10.1109/LGRS.2024.3505193}
 }
 ```
