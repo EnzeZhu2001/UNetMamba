@@ -64,10 +64,6 @@ For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx
 
 [pretrain_weights](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
 
-## 🧩Pretrained Weights of UNetMamba
-
-[model_weights](https://pan.baidu.com/s/1wVVI1MPY_fnVSYg_5bLIlQ?pwd=mdwe) 
-
 ## 💿Data Preprocessing
 
 Download the datasets from the official website and split them as follows.
