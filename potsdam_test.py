@@ -2,7 +2,7 @@ import ttach as tta
 import multiprocessing.pool as mpp
 import multiprocessing as mp
 import time
-from train_unetmamba import *
+from train import *
 import argparse
 from pathlib import Path
 import cv2
@@ -52,7 +52,7 @@ def img_writer(inp):
 def get_args():
     parser = argparse.ArgumentParser()
     arg = parser.add_argument
-    arg("-c", "--config_path", type=Path, required=True, help="Path to  config")
+    arg("-c", "--config_path", type=Path, required=True, help="Path to config")
     arg("-o", "--output_path", type=Path, help="Path where to save resulting masks.", required=True)
     arg("-t", "--tta", help="Test time augmentation.", default=None, choices=[None, "d4", "lr"])
     arg("--rgb", help="whether output rgb images", action='store_true')
