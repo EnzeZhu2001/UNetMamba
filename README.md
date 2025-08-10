@@ -62,7 +62,9 @@ For our UNetMamba, we installed both "causal_conv1d-1.2.0.post2+cu118torch2.0cxx
 
 ## 🧩Pretrained Weights of Backbones
 
-[pretrain_weights](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
+[Baidu Netdisk](https://pan.baidu.com/s/19TRZVfz6M9v0VYxiHB6mSA?pwd=82cj) 
+
+[Google Drive](https://drive.google.com/drive/folders/1C7i3zIYROZsnosCsUF5jwj0FfDGv2FM1?usp=sharing)
 
 ## 💿Data Preprocessing
 
