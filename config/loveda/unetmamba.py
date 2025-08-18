@@ -112,7 +112,7 @@ def train_aug(img, mask):
     return img, mask
 
 
-train_dataset = LoveDATrainDataset(transform=train_aug, data_root='data/LoveDA/Train')
+train_dataset = LoveDATrainDataset(transform=train_aug, data_root='data/LoveDA/train_val')
 
 val_dataset = loveda_val_dataset
 
