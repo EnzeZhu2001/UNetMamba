@@ -35,7 +35,6 @@ UNetMamba-main
 │   │   │   │   ├── masks_png_convert_rgb
 │   │   ├── Val (the same with Train)
 │   │   ├── Test
-│   │   ├── train_val (merge Train and Val)
 │   ├── vaihingen (a total of 33 original images)
 │   │   ├── test_images (9 original images, randomly selected)
 │   │   ├── test_masks (9 original rgb masks)
