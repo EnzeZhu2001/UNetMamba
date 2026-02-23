@@ -1,4 +1,6 @@
 # UNetMamba
+> [Enze Zhu](https://scholar.google.com/citations?user=9k1flhEAAAAJ&hl=zh-CN), [Zhan Chen](https://scholar.google.com/citations?user=9k1flhEAAAAJ&hl=zh-CN), Dingkai Wang, Hanru Shi, [Xiaoxuan Liu](https://scholar.google.com/citations?user=VjXx-JYAAAAJ&hl=zh-CN), Lei Wang
+
 ## 👀Introduction
 
 **UNetMamba** is the official PyTorch implementation of paper [UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of High-Resolution Remote Sensing Images](https://arxiv.org/abs/2408.11545). 
